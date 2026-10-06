@@ -26,3 +26,4 @@ class DebugController extends ControllerBase implements ContainerInjectionInterf
   }
 
 }
+
