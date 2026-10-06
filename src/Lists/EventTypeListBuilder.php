@@ -116,3 +116,22 @@ class EventTypeListBuilder extends ConfigEntityListBuilder {
   }
 
 }
+
+
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
+    $account = $this->prepareUser($account);
+    $child = $entity instanceof RuleInterface ? $entity : $entity->getRule();
+    if ($child instanceof EntityInterface) {
+      /** @var $child RuleInterface|\Drupal\rng\RuleComponentInterface */
+      return $child
+        ->getEvent()
+        ->access('manage event', $account, TRUE);
+    }
+    return AccessResult::neutral();
+  }
+
+}
